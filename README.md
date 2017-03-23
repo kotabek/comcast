@@ -3,7 +3,7 @@
 ###Java version
 ``1.8``
 ###Start project
-``mvn jetty:run``
+``mvn clean install jetty:run``
 
 ###Active Api:
 ####POST /ad
