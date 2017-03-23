@@ -34,7 +34,7 @@ public class AdApiTest {
         Assert.assertNotNull(obj);
         Assert.assertNotNull(obj.get("status"));
         Assert.assertNotNull(obj.get("message"));
-        Assert.assertEquals(obj.get("status"), "Error");
+        Assert.assertEquals(obj.get("status"), ApiResponces.STATUS_ERROR);
     }
 
     @Test
