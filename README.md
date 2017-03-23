@@ -1,5 +1,11 @@
 #comcast
 
+###Java version
+``1.8``
+###Start project
+``mvn jetty:run``
+
+###Active Api:
 ####POST /ad
     Creates new campaign in ad system
         
