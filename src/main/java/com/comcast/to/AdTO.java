@@ -2,6 +2,7 @@ package com.comcast.to;
 
 import com.comcast.utils.DG;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
@@ -10,14 +11,15 @@ import java.util.Map;
 /**
  * Created by kotabek on 3/22/17.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AdTO {
     @JsonProperty(value = "partner_id")
     private String partnerId;
-    @JsonIgnore
+    @JsonProperty(value = "start_time")
     private Date startTime;
     @JsonProperty(value = "duration")
     private int duration;
-    @JsonProperty(value = "ad_duration")
+    @JsonProperty(value = "ad_content")
     private String content;
 
 
@@ -53,6 +55,7 @@ public class AdTO {
         this.content = content;
     }
 
+    @JsonIgnore
     public static AdTO parse(Map<String, Object> data) {
         final AdTO to = new AdTO();
         if (data != null) {
@@ -71,5 +74,15 @@ public class AdTO {
                ", duration=" + duration +
                ", content='" + content + '\'' +
                '}';
+    }
+
+    @JsonIgnore
+    public boolean isActive() {
+        if (this.getStartTime() == null
+            || this.getDuration() <= 0) {
+            return false;
+        }
+        return System.currentTimeMillis() <
+               this.getStartTime().getTime() + (1000 * this.getDuration());
     }
 }

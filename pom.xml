@@ -25,6 +25,24 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
+
         <!-- Spring MVC framework -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -37,14 +55,14 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.4</version>
         </dependency>
-        
+
         <!-- JSTL -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>${jstl.version}</version>
         </dependency>
-        
+
         <!-- standard.jar -->
         <dependency>
             <groupId>taglibs</groupId>
@@ -68,6 +86,7 @@
             <scope>test</scope>
         </dependency>
 
+
     </dependencies>
     <build>
 
@@ -87,7 +106,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.11.v20150529</version>
                 <configuration>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scanIntervalSeconds>3</scanIntervalSeconds>
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>

@@ -2,7 +2,6 @@ package com.comcast.controllers;
 
 import com.comcast.services.AdService;
 import com.comcast.to.AdTO;
-import com.comcast.utils.IdGenerator;
 import com.comcast.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,19 +21,18 @@ public class IndexController {
     @Autowired
     private AdService adService;
 
-    @RequestMapping(value = {"/", "/**"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/main"}, method = RequestMethod.GET)
     public ModelAndView indexPage() {
         AdTO to = new AdTO();
-        to.setPartnerId(new IdGenerator().nextId());
+//        to.setPartnerId(new IdGenerator().nextId());
         return new ModelAndView("index")
-                .addObject("list", adService.getList(null))
+                .addObject("list", adService.getList(true))
                 .addObject("item", to);
     }
 
-    @RequestMapping(value = {"/", "/**"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/"}, method = RequestMethod.POST)
     public ModelAndView indexPage(@ModelAttribute(value = "item") AdTO to) {
 
-        ModelAndView mv = new ModelAndView("index");
 
         String errorMessage = null;
         if (StringUtils.isEmpty(to.getPartnerId())) {
@@ -47,15 +45,12 @@ public class IndexController {
         if (StringUtils.isEmpty(errorMessage)) {
             to.setStartTime(new Date(System.currentTimeMillis()));
             adService.createAd(to);
-            to = new AdTO();
-            to.setPartnerId(new IdGenerator().nextId());
-
-        } else {
-            mv.addObject("errorMessage", errorMessage);
-
+            return new ModelAndView("redirect:/");
         }
 
-        return mv.addObject("list", adService.getList(null))
-                 .addObject("item", to);
+        return new ModelAndView("index")
+                .addObject("errorMessage", errorMessage)
+                .addObject("list", adService.getList(true))
+                .addObject("item", to);
     }
 }
